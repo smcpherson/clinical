@@ -13,6 +13,7 @@ module Clinical
     element :overall_status, Clinical::Status, :parser => :parse
     element :url, String    
     element :short_title, String, :tag => "title"
+    element :brief_title, String, :tag => "brief_title"
     element :official_title, String
     element :condition_summary, String
     has_many :condition_items, Clinical::Condition, :tag => "condition", :raw => true
@@ -56,6 +57,10 @@ module Clinical
     attr_reader :categories
     attr_reader :terms
 
+    def title
+      [short_title, brief_title, official_title].compact.first
+    end
+    
     def id
       self.nct_id
     end
